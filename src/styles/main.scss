@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+  }
+  
+  nav {
+    ul {
+      list-style-type: none;
+      padding: 0;
+  
+      li {
+        display: inline;
+        margin: 0 10px;
+        
+        a {
+          color: #fff;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+  
+  footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+
+  }
+  
+  .carousel {
+    width: 50%; /* Define a largura do carrossel */
+    margin: 0 auto; /* Centraliza o carrossel na página */
+  }
+  
+  .carousel-item img {
+    max-width: 100%; /* Define a largura máxima da imagem como 100% */
+    height: auto; /* Mantém a proporção da imagem */
+  }
+  

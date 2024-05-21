@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Footer from './components/Footer';
+import Navbar from './components/Navbar';
+import ProductDetail from './components/ProductDetail'; // Importe o componente ProductDetail
+import ProductCard from './components/ProductCard';
+import ProductList from './components/ProductList';
+import ProductPage from './pages/ProductPage';
+import HomePage from './pages/HomePage';
+
+const products = [
+  { id: 1, title: "Harry Potter e a Pedra Filosofal", description: "Harry Potter é um garoto cujos pais, feiticeiros, foram assassinados por um poderosíssimo bruxo quando ele ainda era um bebê. Ele foi levado, então, para a casa dos tios que nada tinham a ver com o sobrenatural. No dia de seu aniversário de 11 anos, Harry descobre sua verdadeira história e seu destino: ser um aprendiz de feiticeiro até o dia em que terá que enfrentar a pior força do mal, o homem que assassinou seus pais.", price: 59.99, image: "https://m.media-amazon.com/images/I/81ibfYk4qmL._SL1500_.jpg" },
+
+  { id: 2, title: "Harry Potter e a Ordem da Fênix ", description: "Tempos sombrios se abateram sobre Hogwarts. Depois do ataque dos Dementadores ao seu primo Dudley, Harry Potter sabe que Voldemort fará tudo para encontrá-lo. Muitos negam o retorno do Lorde das Trevas, mas Harry não está sozinho: uma ordem secreta se reúne no Largo Grimmauld para fazer frente às forças sombrias. Harry precisa permitir que o professor Snape o ensine a se proteger dos vorazes ataques de Voldemort à sua mente. Mas eles estão ficando cada vez mais fortes, e o tempo de Harry está acabando...", price: 99.99, image: "https://m.media-amazon.com/images/I/81d6ESyPZwL._SL1500_.jpg" },
+  { id: 3, title: "Harry Potter e o Cálice de Fogo ", description: "Harry volta para a Escola de Magia e Bruxaria de Hogwarts para cursar a quarta série. Para surpresa de todos não haverá a tradicional Copa Anual de Quadribol entre Casas. Será substituída pelo Torneio Tribuxo, uma competição amistosa entre as três maiores escolas européias de bruxaria. A competição é dividida em tarefas, cuja finalidade é testar a coragem, o poder de dedução, a perícia em magia e a capacidade de enfrentar o perigo dos campeões.", price: 69.99, image: "https://m.media-amazon.com/images/I/81nTLN-kz7L._SL1500_.jpg" },
+  { id: 4, title: "Interestelar ", description: "Após ver a Terra consumindo boa parte de suas reservas naturais, um grupo de astronautas recebe a missão de verificar possíveis planetas para receberem a população mundial, possibilitando a continuação da espécie. Cooper (Matthew McConaughey) é chamado para liderar o grupo e aceita a missão sabendo que pode nunca mais ver os filhos. Ao lado de Brand (Anne Hathaway), Jenkins (Marlon Sanders) e Doyle (Wes Bentley), ele seguirá em busca de uma nova casa. Com o passar dos anos, sua filha Murph (Mackenzie Foy e Jessica Chastain) investirá numa própria jornada para também tentar salvar a população do planeta.", price: 15.99, image: "https://m.media-amazon.com/images/I/71qzTzxzoCL._SL1000_.jpg" },
+
+  { id: 5, title: "Oppenheimer ", description: "Oppenheimer é um filme histórico de drama dirigido por Christopher Nolan e baseado no livro biográfico vencedor do Prêmio Pulitzer, Prometeu Americano: O Triunfo e a Tragédia de J. Robert Oppenheimer, escrito por Kai Bird e Martin J. Sherwin. Ambientado na Segunda Guerra Mundial, o longa acompanha a vida de J. Robert Oppenheimer (Cillian Murphy), físico teórico da Universidade da Califórnia e diretor do Laboratório de Los Alamos durante o Projeto Manhattan - que tinha a missão de projetar e construir as primeiras bombas atômicas. ", price: 15, image: "https://m.media-amazon.com/images/I/71YcWZFn4QL._SL1500_.jpg" },
+  { id: 6, title: "Batman: O Cavaleiro das Trevas  ", description: "Após dois anos desde o surgimento do Batman (Christian Bale), os criminosos de Gotham City têm muito o que temer. Com a ajuda do tenente James Gordon (Gary Oldman) e do promotor público Harvey Dent (Aaron Eckhart), Batman luta contra o crime organizado. Acuados com o combate, os chefes do crime aceitam a proposta feita pelo Coringa (Heath Ledger) e o contratam para combater o Homem-Morcego.", price: 15.99, image: "https://upload.wikimedia.org/wikipedia/pt/d/d1/The_Dark_Knight.jpg" },
+  { id: 7, title: "Game of Thrones ", description: "Game of Thrones conta a história de um lugar onde uma força destruiu o equilíbrio das estações, há muito tempo. Em uma terra onde os verões podem durar vários anos e o inverno toda uma vida, as reivindicações e as forças sobrenaturais correm as portas do Reino dos Sete Reinos. A irmandade da Patrulha da Noite busca proteger o reino de cada criatura que pode vir de lá da Muralha, mas já não tem os recursos necessários para garantir a segurança de todos. Depois de um verão de dez anos, um inverno rigoroso promete chegar com um futuro mais sombrio. Enquanto isso, conspirações e rivalidades correm no jogo político pela disputa do Trono de Ferro, o símbolo do poder absoluto.", price: 10.99, image: "https://m.media-amazon.com/images/I/919b2V2DlpL._SL1500_.jpg"},
+  { id: 8, title: "Dark", description: "Quatro diferentes famílias - Kahnwald, Nielsen, Doppler e Tiedemann - vivem em Winden, uma pequena e aparentemente tranquila cidade alemã. A rotina dos moradores vira de cabeça para baixo quando duas crianças desaparecem misteriosamente, nas proximidades de uma antiga usina nuclear. Segredos familiares começam a emergir à medida que a polícia investiga os sumiços e logo percebe uma relação com eventos também sombrios do passado. O tempo e o espaço parecem se embaralhar cada vez mais, deflagrando uma série de tragédias que, curiosamente, se repete a cada geração.", price: 10.99, image: "https://upload.wikimedia.org/wikipedia/pt/f/f6/Dark_%28s%C3%A9rie%29.jpg"},
+  { id: 9, title: "euphoria", description: "Em Euphoria, Rue Bennett (Zendaya) é uma jovem de 17 anos que acaba de sair da clínica de reabilitação após ter uma overdose. Rue sofre com transtornos mentais desde criança, o que a fez entrar em contato com drogas ainda no início da adolescência. Ela tenta agora se adaptar a uma vida limpa e volta a frequentar a escola. Mas, assim como ela, os demais alunos do ensino médio enfrentam seus próprios desafios, envolvendo sexo, drogas, amizades, relacionamentos amorosos, conflitos familiares, redes sociais e violência. ", price: 25.99, image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjw6KO3CVz91A6HpkSurldeYuGjuqngcT8sDNlkaN9O5k3xcNN8IhAnMAy6Y1OmR0RqXKQNqWOrDWVHz74Wt5XBSbM49WXtaDCKdTBQAAg5SRzppTH1pyP_BAVNSxia3WRixD_SupBhHA/s1600/euphoria.jpg"},
+  { id: 10, title: "Stranger Things", description: "Situada no início dos anos 1980, Stranger Things se passa na cidade rural fictícia de Hawkins, Indiana. Como fachada, o laboratório da região realizava experimentos científicos para o Departamento de Energia Americano, quando na realidade, os pesquisadores ali investiram em experimentos com o paranormal e o sobrenatural, incluindo o uso de cobaias humanas. Não intencionalmente, eles criaram um portal para uma dimensão alternativa conhecida como Mundo Invertido, o que iria impactar a vida dos residentes da pequena cidade. ", price: 199.99, image: "https://m.media-amazon.com/images/I/71SeUDXO8IL._SL1411_.jpg"},
+  { id: 11, title: "Menino do Pijama Listrado", description: "Bruno tem nove anos e não sabe nada sobre o Holocausto e a Solução Final contra os judeus. Também não faz idéia que seu país está em guerra com boa parte da Europa, e muito menos que sua família está envolvida no conflito. Na verdade, Bruno sabe apenas que foi obrigado a abandonar a espaçosa casa em que vivia em Berlim e a mudar-se para uma região desolada, onde ele não tem ninguém para brincar nem nada para fazer. Da janela do quarto, Bruno pode ver uma cerca, e para além dela centenas de pessoas de pijama, que sempre o deixam com frio na barriga.", price: 59.99, image: "https://m.media-amazon.com/images/I/91YD+gCjjyL._SL1500_.jpg"},
+  { id: 12, title: "Dunkirk", description: "Em Dunkirk, na Operação Dínamo, mais conhecida como a Evacuação de Dunquerque, soldados aliados da Bélgica, do Império Britânico e da França são rodeados pelo exército alemão e devem ser resgatados durante uma feroz batalha no início da Segunda Guerra Mundial. A história acompanha três momentos distintos: uma hora de confronto no céu, onde o piloto Farrier (Tom Hardy) precisa destruir um avião inimigo, um dia inteiro em alto mar, onde o civil britânico Dawson (Mark Rylance) leva seu barco de passeio para ajudar a resgatar o exército de seu país, e uma semana na praia, onde o jovem soldado Tommy (Fionn Whitehead) busca escapar a qualquer preço.", price: 99.99, image: "https://m.media-amazon.com/images/I/91eJSUExHgL._SL1500_.jpg"},
+];
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage products={products} />} />
+          <Route path="/products" element={<ProductPage products={products} />} />
+          <Route path="/product/:id" element={<ProductDetail products={products} />} /> {/* Rota para a página de detalhes do produto */}
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
