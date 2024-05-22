@@ -1,3 +1,8 @@
+Integrantes : 
+- Kaio Vinicius Meireles Alves RM553282
+- Lucas Alves de Souza RM553956
+- Lucas de Freitas Pagung RM553242
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
